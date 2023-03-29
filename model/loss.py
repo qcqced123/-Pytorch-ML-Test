@@ -4,6 +4,8 @@ import torch
 import torch.nn.functional as F
 import torch.nn as nn
 from torch import Tensor
+from torch.optim.swa_utils import AveragedModel, SWALR
+from torch.optim.lr_scheduler import CosineAnnealingLR, CosineAnnealingWarmRestarts
 
 
 class RMSELoss(nn.Module):
@@ -22,7 +24,11 @@ def cross_entropy(y_pred: Tensor, y_true: Tensor) -> Tensor:
     return criterion(y_pred, y_true)
 
 
-def binary_bce(y_pred: Tensor, y_true: Tensor) -> Tensor:
+def binary_cross_entropy(y_pred: Tensor, y_true: Tensor) -> Tensor:
+    """
+    This function is for binary classification
+    => nn.Linear(output_dim, 1)
+    """
     criterion = nn.BCEWithLogitsLoss()
     return criterion(y_pred, y_true)
 
